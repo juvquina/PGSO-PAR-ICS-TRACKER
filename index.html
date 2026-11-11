@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PGSO Folder Tracker Logbook</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand-mark">
+      <div class="brand-identity">
+        <img class="brand-seal" src="./pgsologo.png" alt="PGSO logo" />
+        <span class="brand-copy"><strong>PGSO IMS</strong><small>Inventory &amp;<br>Management System</small></span>
+      </div>
+      <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Collapse sidebar" aria-expanded="true" title="Collapse sidebar"><span aria-hidden="true">‹</span></button>
+    </div>
+    <nav>
+      <a href="#" data-view="dashboard"><span class="nav-icon">▦</span><span class="nav-label">Dashboard</span></a>
+      <a class="active" href="#" data-view="tasks"><span class="nav-icon">☰</span><span class="nav-label">My Logs</span></a>
+      <a href="#" data-view="settings"><span class="nav-icon">⚙</span><span class="nav-label">Settings</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <img class="government-branding" src="./pgmo.logo.png" alt="Provincial Government of Misamis Oriental with Bangon Misamis Oriental and Unity logos" />
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>PGSO FOLDER TRACKER LOGBOOK</h1>
+        <p class="live-clock"><time id="liveDateTime"></time></p>
+        <p class="updated">Last Update: <span id="lastUpdate">31 August, 2024</span></p>
+      </div>
+      <div class="user"><small>PGSO Employee</small><div class="avatar">P</div></div>
+    </header>
+
+    <p class="storage-notice" id="storageNotice" role="alert" hidden></p>
+
+    <section class="dashboard-view" id="dashboardView" hidden>
+      <div class="dashboard-heading">
+        <div>
+          <h2>Weekly Report</h2>
+          <p class="week-range" id="weekRange"></p>
+        </div>
+        <button class="secondary" id="viewLogsBtn">View My Logs</button>
+      </div>
+      <div class="summary-grid">
+        <article class="summary-card">
+          <span class="summary-label">Logs started this week</span>
+          <strong id="weeklyTotal">0</strong>
+          <small>Based on Time Started</small>
+        </article>
+        <article class="summary-card borrowed-card">
+          <span class="summary-label">Currently borrowed</span>
+          <strong id="weeklyBorrowed">0</strong>
+          <small>Among this week's logs</small>
+        </article>
+        <article class="summary-card returned-card">
+          <span class="summary-label">Returned</span>
+          <strong id="weeklyReturned">0</strong>
+          <small>Among this week's logs</small>
+        </article>
+        <article class="summary-card rate-card">
+          <span class="summary-label">Weekly return rate</span>
+          <strong id="weeklyRate">0%</strong>
+          <div class="rate-track" role="img" aria-label="Weekly return rate">
+            <span id="weeklyRateBar"></span>
+          </div>
+          <small>Returned / logs started this week</small>
+        </article>
+      </div>
+      <section class="weekly-report">
+        <h3>Daily logbook activity</h3>
+        <p>Entries are grouped by their start date and show their current status.</p>
+        <div class="table-wrap">
+          <table class="weekly-table">
+            <thead><tr><th>Day</th><th>Logs started</th><th>Borrowed</th><th>Returned</th></tr></thead>
+            <tbody id="weeklyRows"></tbody>
+          </table>
+          <div class="empty" id="weeklyEmpty" hidden>No log entries were started this week.</div>
+        </div>
+      </section>
+    </section>
+
+    <section id="logsView">
+      <div class="task-heading" id="logsHeading">
+        <div class="tabs-title">
+          <h2>My Logs</h2>
+          <div class="tabs">
+            <button class="tab active" data-filter="All">All</button>
+            <button class="tab" data-filter="Today">Today</button>
+            <button class="tab" data-filter="Borrowed">Borrowed</button>
+            <button class="tab" data-filter="Returned">Returned</button>
+          </div>
+        </div>
+        <div class="actions">
+          <label class="search">⌕ <input id="searchInput" placeholder="Search Tasks" /></label>
+          <button class="secondary" id="recentDeletedBtn" type="button">Recently Deleted (<span id="deletedCount">0</span>)</button>
+          <button class="primary" id="addBtn">＋ Add New</button>
+        </div>
+      </div>
+
+      <div id="mainLogsPanel">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th class="check"></th>
+              <th>Borrower Name</th><th>File ID/File Name</th><th>Purpose</th><th>Status</th><th>Time Started</th><th></th>
+            </tr></thead>
+            <tbody id="taskRows"></tbody>
+          </table>
+          <div class="empty" id="emptyState" hidden>No folders found. Add a new logbook entry to get started.</div>
+        </div>
+        <footer class="table-footer"><span id="recordCount">Showing 10 records</span><div class="pagination"><button id="prevPage">‹</button><span id="pageLabel">1</span><button id="nextPage">›</button></div></footer>
+      </div>
+      <section id="recentDeletedView" hidden>
+        <div class="deleted-heading">
+          <div><h2>Recently Deleted</h2><p>Deleted entries are kept here until permanently removed.</p></div>
+          <button class="secondary" id="backToLogsBtn" type="button">Back to My Logs</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Borrower Name</th><th>File ID/File Name</th><th>Purpose</th><th>Status</th><th>Deleted</th><th>Actions</th></tr></thead>
+            <tbody id="deletedRows"></tbody>
+          </table>
+          <div class="empty" id="deletedEmpty" hidden>No recently deleted entries.</div>
+        </div>
+      </section>
+    </section>
+    <footer class="site-footer">© 2026 Provincial General Services Office | Inventory &amp; Management System. All rights reserved.</footer>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modal" hidden>
+  <form class="modal" id="taskForm">
+    <div class="modal-head"><h2 id="modalTitle">Add Logbook Entry</h2><button type="button" class="close" id="closeModal">×</button></div>
+    <label>Borrower Name<input name="borrower" required placeholder="e.g. Juan Dela Cruz"></label>
+    <label>File ID / File Name<input name="file" required placeholder="e.g. Design team / Folder 01"></label>
+    <label>Details / Notes<textarea name="details" rows="3" maxlength="500" placeholder="Add any useful notes about this folder or transaction"></textarea></label>
+    <div class="form-grid">
+      <label>Status<select name="status"><option>Borrowed</option><option>Returned</option></select></label>
+      <label>Time Started<input name="timeStarted" type="datetime-local" required></label>
+    </div>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelBtn">Cancel</button><button class="primary" type="submit">Save Entry</button></div>
+  </form>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
